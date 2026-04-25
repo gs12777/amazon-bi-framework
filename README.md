@@ -123,7 +123,7 @@ This strengthened both usability and stakeholder engagement.
 
 ## Project Preview
 
-![Dashboard Preview 1](images/Home Page.png)
+![Dashboard Preview 1](images/HomePage.png)
 
 <p align="center">
   <img src="images/dashboard1.png" width="45%" />
