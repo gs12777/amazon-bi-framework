@@ -42,12 +42,19 @@ amazon-business-intelligence-framework/
 ├── images/  
 │   ├── Home Page.png  
 │   ├── dashboard1.png
+
 │   ├── dashboard2.png
+
 │   ├── dashboard3.png
+
 │   ├── dashboard4.png
+
 │   ├── dashboard5.png
+
 │   ├── dashboard6.png
+
 │   ├── dashboard7.png
+
 │   └── dashboard8.png  
 ├── reports/  
 │   └── amazon_bi_dashboard.pbip  
