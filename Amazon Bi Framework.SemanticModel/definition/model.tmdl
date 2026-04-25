@@ -1,0 +1,36 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Amazon_Customer_Insights","Expense_Tracking_Budget_Analysis","Market_Basket_Analysis_India","transaction_data","customer_segmentation_dataset","retail_price_optimization_dataset","employee_performance_analytics_dataset","sales_forecasting_dataset"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.140.1577.0 (25.02)+00af0910c5ca19a229c472b0dfc17a2c488f6b0a
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Amazon_Customer_Insights
+ref table DateTableTemplate_a37fabbc-e172-405d-a24d-64f61f9ab1ff
+ref table Expense_Tracking_Budget_Analysis
+ref table LocalDateTable_521a1d67-2a44-432c-acf6-fbe18e935550
+ref table Market_Basket_Analysis_India
+ref table LocalDateTable_99469d06-fd18-4f3c-a897-0dbaa13b1569
+ref table transaction_data
+ref table LocalDateTable_0c43d3ae-49c4-43d2-8648-09bdfa484046
+ref table customer_segmentation_dataset
+ref table LocalDateTable_1538cb1b-2821-4788-a2b7-8c797ecad4f0
+ref table retail_price_optimization_dataset
+ref table LocalDateTable_5417c7a2-6fb4-4e14-b2ac-7f4378289fe2
+ref table employee_performance_analytics_dataset
+ref table LocalDateTable_c6adea2a-aa0e-4cdd-8b7d-5cae69b08cc7
+ref table TicketStatusSummary
+ref table sales_forecasting_dataset
+ref table LocalDateTable_2704fb1f-58a5-42e0-ba4e-3cc7c3f9b9b8
+
+ref cultureInfo en-US
+

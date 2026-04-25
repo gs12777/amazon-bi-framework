@@ -1,0 +1,207 @@
+table sales_forecasting_dataset
+	lineageTag: ab53ada4-f42f-4b33-9c18-b39b630312ec
+
+	measure MaxDailyRevenue =
+			
+			MAXX(
+			    SUMMARIZE(
+			        sales_forecasting_dataset,
+			        sales_forecasting_dataset[Date of Sale],
+			        "DailyRevenue", SUM(sales_forecasting_dataset[Total Revenue])
+			    ),
+			    [DailyRevenue]
+			)
+		lineageTag: 95067833-4e6c-415b-aea2-5fd8aaf4d74f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PeakRevenueDay = ```
+			
+			CALCULATE(
+			    MAX(sales_forecasting_dataset[Date of Sale]),
+			    FILTER(
+			        ADDCOLUMNS(
+			            SUMMARIZE(
+			                sales_forecasting_dataset, 
+			                sales_forecasting_dataset[Date of Sale]
+			            ),
+			            "DailyRevenue", CALCULATE(SUM(sales_forecasting_dataset[Total Revenue]))
+			        ),
+			        [DailyRevenue] = [MaxDailyRevenue]
+			    )
+			)
+			
+			```
+		formatString: General Date
+		lineageTag: 726573ff-c8d0-425c-98ce-b00b25148722
+
+	measure HolidayRevenue = ```
+			
+			CALCULATE(
+			    SUM(sales_forecasting_dataset[Total Revenue]),
+			    sales_forecasting_dataset[Holiday] = "Yes"
+			)
+			
+			```
+		lineageTag: 171518e7-72cc-4f10-b1ae-1d5e0ccb2bfd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure HolidaySalesPercent = ```
+			
+			DIVIDE([HolidayRevenue], [TotalRevenue]) * 100
+			
+			```
+		lineageTag: 7be1cdce-bf54-4546-847a-25e9cee59c0a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Transaction ID'
+		dataType: string
+		lineageTag: a80b26f9-11b3-48ac-889f-e8955c844614
+		summarizeBy: none
+		sourceColumn: Transaction ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Name'
+		dataType: string
+		lineageTag: 6c3e5e83-dbbe-4be5-87a4-d623e979baee
+		summarizeBy: none
+		sourceColumn: Product Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 19a307ba-a5ab-44ea-a45b-cf4248433d26
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Units Sold'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2cd7c029-2f39-4dd2-ac10-fc2496a1d167
+		summarizeBy: sum
+		sourceColumn: Units Sold
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unit Price'
+		dataType: double
+		lineageTag: 53ab24d6-48e4-4a29-8416-b035730a0c88
+		summarizeBy: sum
+		sourceColumn: Unit Price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Total Revenue'
+		dataType: double
+		lineageTag: 2bbfd292-5a12-4c7b-bd88-85d4b9c12ea6
+		summarizeBy: sum
+		sourceColumn: Total Revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Discount Applied'
+		dataType: double
+		lineageTag: 187e35b8-bb35-474e-ada0-c1dc1114e5f2
+		summarizeBy: sum
+		sourceColumn: Discount Applied
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Store Location'
+		dataType: string
+		lineageTag: c33642c0-24ac-45bc-a486-e2d33f6a7bd0
+		summarizeBy: none
+		sourceColumn: Store Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column Channel
+		dataType: string
+		lineageTag: 4636e805-cd50-41c4-9648-7db259d0dd05
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date of Sale'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: bd05ddad-b437-4434-a733-c113ac52d030
+		summarizeBy: none
+		sourceColumn: Date of Sale
+
+		variation Variation
+			isDefault
+			relationship: 9453d928-3e1d-4335-a5b2-a9da650d0a60
+			defaultHierarchy: LocalDateTable_2704fb1f-58a5-42e0-ba4e-3cc7c3f9b9b8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Day
+		dataType: int64
+		formatString: 0
+		lineageTag: 7e0cb415-1b00-43de-b97c-cfd1411ae786
+		summarizeBy: sum
+		sourceColumn: Day
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: ee5eb1f2-2b83-4376-9705-d968d8d5f916
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 6670761c-29d7-46ae-8e6c-fb40415a4d46
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weather
+		dataType: string
+		lineageTag: 9c1b6673-736b-4008-890a-4a7d028a7b36
+		summarizeBy: none
+		sourceColumn: Weather
+
+		annotation SummarizationSetBy = Automatic
+
+	column Holiday
+		dataType: string
+		lineageTag: db2bf006-2b24-4926-8eed-1822f9c61266
+		summarizeBy: none
+		sourceColumn: Holiday
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sales_forecasting_dataset = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\gurus\Downloads\sales_forecasting_dataset.csv"),[Delimiter=",", Columns=15, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Transaction ID", type text}, {"Product Name", type text}, {"Category", type text}, {"Units Sold", Int64.Type}, {"Unit Price", type number}, {"Total Revenue", type number}, {"Discount Applied", Percentage.Type}, {"Store Location", type text}, {"Channel", type text}, {"Date of Sale", type date}, {"Day", Int64.Type}, {"Month", type text}, {"Year", Int64.Type}, {"Weather", type text}, {"Holiday", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

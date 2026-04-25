@@ -1,0 +1,41 @@
+table TicketStatusSummary
+	lineageTag: 4442ddd8-9b56-44a1-ace9-7947634c63eb
+
+	column Status
+		lineageTag: 296e061b-24ac-4167-ae97-0b95cf1a7109
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Status]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Count
+		formatString: 0
+		lineageTag: d42882ce-faff-4f13-9a88-37883a853b7a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Count]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TicketStatusSummary = calculated
+		mode: import
+		source = ```
+				
+				UNION(
+				    SELECTCOLUMNS(
+				        'employee_performance_analytics_dataset',
+				        "Status", "Resolved",
+				        "Count", 'employee_performance_analytics_dataset'[Resolved Tickets]
+				    ),
+				    SELECTCOLUMNS(
+				        'employee_performance_analytics_dataset',
+				        "Status", "Unresolved",
+				        "Count", 'employee_performance_analytics_dataset'[Unresolved Tickets]
+				    )
+				)
+				
+				```
+
+	annotation PBI_Id = ae6f0f7a195b44cbb51f318ca5953439
+

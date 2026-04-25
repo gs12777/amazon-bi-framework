@@ -1,0 +1,102 @@
+table Market_Basket_Analysis_India
+	lineageTag: 58efb145-70a5-433d-a569-4e796f69f1b7
+
+	measure 'Total Revenue (INR)' = SUMX('Market_Basket_Analysis_India', 'Market_Basket_Analysis_India'[Quantity] * 'Market_Basket_Analysis_India'[Price per Unit])
+		formatString: 0
+		lineageTag: b66a72aa-a983-4ed7-a7c9-9b922469c87f
+
+	measure 'Total Quantity Sold' = SUM('Market_Basket_Analysis_India'[Quantity])
+		formatString: 0
+		lineageTag: 9c03bf9b-a316-47f7-a5c2-f21c5cdc5383
+
+	measure ADSdaasDDSDDSDSDDDSDDSDA = COUNTROWS('Market_Basket_Analysis_India')
+		formatString: 0
+		lineageTag: abcb704e-a234-4063-9828-818df79d0c0b
+
+	column 'Transaction ID'
+		dataType: string
+		lineageTag: f64750bd-0af8-4daf-9e67-3ba1feaec56c
+		summarizeBy: none
+		sourceColumn: Transaction ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Name'
+		dataType: string
+		lineageTag: 7facc27a-7546-4309-a84c-ba00395482d6
+		summarizeBy: none
+		sourceColumn: Customer Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		dataType: string
+		lineageTag: 394e3918-b5ae-485b-bb0d-1e27f6e8c41c
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 1b22241a-b65f-4964-9b80-ff02e713cfed
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: c9dfe675-a126-4e53-a01d-699c5dc27f6e
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Price per Unit'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f8a3bf1-aec7-469c-be40-3b69dd177b45
+		summarizeBy: sum
+		sourceColumn: Price per Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Amount'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3502cf87-d514-4bc8-afd0-95bb44c4aae7
+		summarizeBy: sum
+		sourceColumn: Total Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Transaction Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e2c1421f-4279-4fab-b531-6686a37fe7d6
+		summarizeBy: none
+		sourceColumn: Transaction Date
+
+		variation Variation
+			isDefault
+			relationship: 318498cb-1a24-4c46-965b-9f772ab574cc
+			defaultHierarchy: LocalDateTable_99469d06-fd18-4f3c-a897-0dbaa13b1569.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Market_Basket_Analysis_India = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\gurus\Downloads\New folder (6)\New folder (4)\Market_Basket_Analysis_India.csv"),[Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Transaction ID", type text}, {"Customer Name", type text}, {"Product", type text}, {"Category", type text}, {"Quantity", Int64.Type}, {"Price per Unit", Int64.Type}, {"Total Amount", Int64.Type}, {"Transaction Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

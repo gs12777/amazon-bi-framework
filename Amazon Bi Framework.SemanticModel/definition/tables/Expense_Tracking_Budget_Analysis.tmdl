@@ -1,0 +1,138 @@
+table Expense_Tracking_Budget_Analysis
+	lineageTag: eae49aa2-bca3-4762-befe-23fe9994a1ec
+
+	measure 'Budget Utilization %' = ```
+			
+			DIVIDE(
+			    SUM(Expense_Tracking_Budget_Analysis[Actual Expense (INR)]), 
+			    SUM(Expense_Tracking_Budget_Analysis[Budgeted amount]), 0) * 100
+			```
+		lineageTag: c7e9526f-975f-41bb-b5b0-bd9fe15ef2dd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Highest Department' = ```
+			
+			CALCULATE(
+			    MAX(Expense_Tracking_Budget_Analysis[Department]),
+			    FILTER(
+			        VALUES(Expense_Tracking_Budget_Analysis[Department]),
+			        CALCULATE(SUM(Expense_Tracking_Budget_Analysis[Actual Expense (INR)])) = 
+			        CALCULATE(
+			            MAXX(
+			                ALL(Expense_Tracking_Budget_Analysis[Department]), 
+			                SUM(Expense_Tracking_Budget_Analysis[Actual Expense (INR)])
+			            )
+			        )
+			    )
+			)
+			
+			```
+		lineageTag: 86b4489d-e3d0-45b3-be78-5fc5e11248a7
+
+	measure 'Top Category' = ```
+			
+			CALCULATE(
+			    MAX(Expense_Tracking_Budget_Analysis[Expense Category]),
+			    FILTER(
+			        VALUES(Expense_Tracking_Budget_Analysis[Expense Category]),
+			        CALCULATE(SUM(Expense_Tracking_Budget_Analysis[Actual Expense (INR)])) = 
+			        CALCULATE(
+			            MAXX(
+			                ALL(Expense_Tracking_Budget_Analysis[Expense Category]), 
+			                SUM(Expense_Tracking_Budget_Analysis[Actual Expense (INR)])
+			            )
+			        )
+			    )
+			)
+			
+			```
+		lineageTag: f4dc776b-ba10-43ee-ae6f-c48558aa4b9a
+
+	measure 'Over Under Budget Count' = COUNTROWS(Expense_Tracking_Budget_Analysis)
+		formatString: 0
+		lineageTag: 9baacc49-3851-454b-b756-103c350395a5
+
+	column Month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 94aebe40-8125-44b1-93e6-42db6838160b
+		summarizeBy: none
+		sourceColumn: Month
+
+		variation Variation
+			isDefault
+			relationship: 2c692429-1206-43a6-97b5-1f840cb58a9c
+			defaultHierarchy: LocalDateTable_521a1d67-2a44-432c-acf6-fbe18e935550.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Department
+		dataType: string
+		lineageTag: a7cffd78-e9ce-4f4a-838f-71cb7e9c6fc2
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Expense Category'
+		dataType: string
+		lineageTag: 658e213e-188a-4fa5-b52f-b540fb06e169
+		summarizeBy: none
+		sourceColumn: Expense Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budgeted Amount'
+		dataType: int64
+		formatString: 0
+		lineageTag: b4ca2c75-566c-4f28-9fb2-82e803c7bd85
+		summarizeBy: sum
+		sourceColumn: Budgeted Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Actual Expense (INR)'
+		dataType: double
+		lineageTag: e2153801-15fa-43a9-9c56-659d3696e58a
+		summarizeBy: sum
+		sourceColumn: Actual Expense (INR)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Variance (INR)'
+		dataType: double
+		lineageTag: d9c27635-581a-42e8-89db-e7502741db37
+		summarizeBy: sum
+		sourceColumn: Variance (INR)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Over/Under Budget'
+		dataType: string
+		lineageTag: 44b5f1be-7301-437a-82a4-3ae4422f0d34
+		summarizeBy: none
+		sourceColumn: Over/Under Budget
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Expense_Tracking_Budget_Analysis = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\gurus\Downloads\New folder (6)\New folder (3)\Expanded_Expense_Tracking_Budget_Analysis.csv"),[Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Month", type date}, {"Department", type text}, {"Expense Category", type text}, {"Budgeted Amount", Int64.Type}, {"Actual Expense (INR)", type number}, {"Variance (INR)", type number}, {"Over/Under Budget", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

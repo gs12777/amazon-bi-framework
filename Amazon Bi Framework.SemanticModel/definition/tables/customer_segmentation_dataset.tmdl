@@ -1,0 +1,152 @@
+table customer_segmentation_dataset
+	lineageTag: f94d3ee1-5dea-4993-a771-06b9e75eea65
+
+	column 'Customer ID'
+		dataType: string
+		lineageTag: c802ca10-c68b-4985-a76e-247f3032f810
+		summarizeBy: none
+		sourceColumn: Customer ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Name'
+		dataType: string
+		lineageTag: 8d30c2c5-0aed-4d86-b938-f6acb8ee0785
+		summarizeBy: none
+		sourceColumn: Customer Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 2630a5bc-1d16-4f08-b932-2f60dec40a1e
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column Age
+		dataType: int64
+		formatString: 0
+		lineageTag: bf79dbff-f2bf-4282-954c-3ba3e4fcee76
+		summarizeBy: sum
+		sourceColumn: Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: f76191b3-8f4c-48f3-ba5d-b0eb6aebb564
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Orders'
+		dataType: int64
+		formatString: 0
+		lineageTag: 55deb781-0c95-4933-887a-200182d29169
+		summarizeBy: sum
+		sourceColumn: Total Orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Average Basket Size (₹)'
+		dataType: double
+		lineageTag: 50768a86-e619-4090-bec5-74a731f56492
+		summarizeBy: sum
+		sourceColumn: Average Basket Size (₹)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Total Spend (₹)'
+		dataType: double
+		lineageTag: 752af660-9a64-4717-862d-81e164604599
+		summarizeBy: sum
+		sourceColumn: Total Spend (₹)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Preferred Category'
+		dataType: string
+		lineageTag: 8e82a620-5cd0-41e5-a932-382860384f79
+		summarizeBy: none
+		sourceColumn: Preferred Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Purchase Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6a6576dd-e95d-4e64-ab00-ff43090340a5
+		summarizeBy: none
+		sourceColumn: Last Purchase Date
+
+		variation Variation
+			isDefault
+			relationship: 640c5b13-1e51-4b96-bcc1-e775aefba99b
+			defaultHierarchy: LocalDateTable_1538cb1b-2821-4788-a2b7-8c797ecad4f0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Days Since Last Purchase'
+		dataType: int64
+		formatString: 0
+		lineageTag: e26a8e18-a29e-400c-8c5f-183dbc9a3717
+		summarizeBy: sum
+		sourceColumn: Days Since Last Purchase
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Engagement Score (1-100)'
+		dataType: int64
+		formatString: 0
+		lineageTag: e74c5896-25cf-4260-a3eb-d069666ef2c7
+		summarizeBy: sum
+		sourceColumn: Engagement Score (1-100)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Rating (1 to 5 stars)'
+		dataType: double
+		lineageTag: ba39f6d5-fec6-47db-805d-2a3d41e45a07
+		summarizeBy: sum
+		sourceColumn: Customer Rating (1 to 5 stars)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CustomerSegment = ```
+			
+			SWITCH(
+			    TRUE(),
+			    'customer_segmentation_dataset'[Total Spend (₹)] > 100000, "High Spender",
+			    'customer_segmentation_dataset'[Total Spend (₹)] > 50000, "Medium Spender",
+			    "Low Spender"
+			)
+			
+			```
+		lineageTag: bb35a2bb-702e-4d17-aeec-a5884bca7f7e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition customer_segmentation_dataset = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\gurus\Downloads\customer_segmentation_dataset.csv"),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Customer ID", type text}, {"Customer Name", type text}, {"Gender", type text}, {"Age", Int64.Type}, {"Location", type text}, {"Total Orders", Int64.Type}, {"Average Basket Size (₹)", type number}, {"Total Spend (₹)", type number}, {"Preferred Category", type text}, {"Last Purchase Date", type date}, {"Days Since Last Purchase", Int64.Type}, {"Engagement Score (1-100)", Int64.Type}, {"Customer Rating (1 to 5 stars)", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

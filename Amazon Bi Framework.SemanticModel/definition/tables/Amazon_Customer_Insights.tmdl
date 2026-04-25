@@ -1,0 +1,264 @@
+table Amazon_Customer_Insights
+	lineageTag: 04fbda26-b80c-4c7d-adba-b737ca748142
+
+	measure Measure
+		lineageTag: 4898d6a7-86d3-443b-b101-dcb91cad4cbb
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	column Customer_ID
+		dataType: string
+		lineageTag: 36d31418-301e-4ec4-8de3-439cd1e3b389
+		summarizeBy: none
+		sourceColumn: Customer_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer_Name
+		dataType: string
+		lineageTag: 975815be-9433-48e7-9b14-c6e4f52608b9
+		summarizeBy: none
+		sourceColumn: Customer_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Age
+		dataType: int64
+		formatString: 0
+		lineageTag: 931aaa39-537e-4450-9026-03d84ac73f5d
+		summarizeBy: sum
+		sourceColumn: Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 96b72531-8aee-42a0-a3e7-91a81d924b35
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: e3d8b03a-e5ac-44d5-8a8f-cabfbb393b23
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column Number_of_Orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 721c8b81-e1a2-4944-bf05-d4df0d3bea92
+		summarizeBy: sum
+		sourceColumn: Number_of_Orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column Average_Order_Value
+		dataType: double
+		lineageTag: 9222ce1e-0bcc-42d6-a9c9-e36855aeed79
+		summarizeBy: sum
+		sourceColumn: Average_Order_Value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Days_Since_Last_Purchase
+		dataType: int64
+		formatString: 0
+		lineageTag: e971ed61-dfe0-470d-a0dc-bf3134c83c68
+		summarizeBy: sum
+		sourceColumn: Days_Since_Last_Purchase
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Category_Preference
+		dataType: string
+		lineageTag: 53c9ce09-92b2-40e9-80ba-11f3c954cf00
+		summarizeBy: none
+		sourceColumn: Product_Category_Preference
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Spend
+		dataType: double
+		lineageTag: 54752b63-af1b-45c1-bd7c-0a6c52f9d9db
+		summarizeBy: sum
+		sourceColumn: Total_Spend
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Frequency_of_Purchase
+		dataType: double
+		lineageTag: b491c667-f658-43b8-b8f5-595267688535
+		summarizeBy: sum
+		sourceColumn: Frequency_of_Purchase
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Age_Group = ```
+			SWITCH(
+			    TRUE(),
+			    Amazon_Customer_Insights[Age] >= 20 && Amazon_Customer_Insights[Age] <= 29, "20-29",
+			    Amazon_Customer_Insights[Age] >= 30 && Amazon_Customer_Insights[Age] <= 39, "30-39",
+			    Amazon_Customer_Insights[Age] >= 40 && Amazon_Customer_Insights[Age] <= 49, "40-49",
+			    Amazon_Customer_Insights[Age] >= 50 && Amazon_Customer_Insights[Age] <= 59, "50-59",
+			    "60+"
+			)
+			
+			```
+		lineageTag: 3c08a247-4442-4c00-a823-8cf83b6fe59f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Recency Score'
+		dataType: string
+		lineageTag: a1eec11f-86f0-4cef-9888-a50b8eccc674
+		summarizeBy: none
+		sourceColumn: Recency Score
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Frequency Score'
+		dataType: string
+		lineageTag: 7f681751-f1d1-4b3f-ba21-4697df89980e
+		summarizeBy: none
+		sourceColumn: Frequency Score
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Monetary Score'
+		dataType: string
+		lineageTag: 82a7a60b-de61-422c-bfdd-1b10af33cae8
+		summarizeBy: none
+		sourceColumn: Monetary Score
+
+		annotation SummarizationSetBy = Automatic
+
+	column R
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f32bb6b-8c0b-4777-a9d7-96beb4bfcfec
+		summarizeBy: sum
+		sourceColumn: R
+
+		annotation SummarizationSetBy = Automatic
+
+	column F
+		dataType: int64
+		formatString: 0
+		lineageTag: 53403a50-e9a4-40ed-b918-f332f8989537
+		summarizeBy: sum
+		sourceColumn: F
+
+		annotation SummarizationSetBy = Automatic
+
+	column M
+		dataType: int64
+		formatString: 0
+		lineageTag: c0d8e36f-cb22-4b01-b261-bfdedaa1abc6
+		summarizeBy: sum
+		sourceColumn: M
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'RFM Category'
+		dataType: string
+		lineageTag: 79fc08be-47b5-4db3-8257-7a8f66b401b9
+		summarizeBy: none
+		sourceColumn: RFM Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'RFM Score' = FORMAT([R],"0") & FORMAT([F],"0") & FORMAT([M],"0")
+		lineageTag: fcb6b30a-d18e-454e-b490-c24bcd6cf3c5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column RFM_Score_Numeric = [R] + [F] + [M]
+		formatString: 0
+		lineageTag: 54d1457f-2616-49cd-9df3-8152fbd4977c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Amazon_Customer_Insights = m
+		mode: import
+		source = ```
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\gurus\Downloads\New folder (6)\New folder\Amazon_Customer_Analysis.csv"),[Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Customer_ID", type text}, {"Customer_Name", type text}, {"Age", Int64.Type}, {"Gender", type text}, {"Location", type text}, {"Number_of_Orders", Int64.Type}, {"Average_Order_Value", type number}, {"Days_Since_Last_Purchase", Int64.Type}, {"Product_Category_Preference", type text}, {"Total_Spend", type number}, {"Frequency_of_Purchase", type number}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "Recency Score", each if [Days_Since_Last_Purchase] <= 30 then 3 
+				else if [Days Since Last Purchase] <= 90 then 2 
+				else 1),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"Days_Since_Last_Purchase", Int64.Type}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type1", "Custom Score", each let
+				  value = try [Days Since Last Purchase]
+				in
+				  if value[HasError] then null
+				  else if value[Value] <= 30 then 3
+				  else if value[Value] <= 90 then 2
+				  else 1),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Custom1",{"Custom Score", "Recency Score"}),
+				    #"Added Custom2" = Table.AddColumn(#"Removed Columns", "Recency Score", each let
+				  value = try [Days_Since_Last_Purchase]
+				in
+				  if value[HasError] then null
+				  else if value[Value] <= 30 then 3
+				  else if value[Value] <= 90 then 2
+				  else 1),
+				    #"Added Custom3" = Table.AddColumn(#"Added Custom2", "Frequency Score", each if [Number_of_Orders] >= 30 then 3
+				else if [Number of Orders] >= 15 then 2
+				else 1),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Added Custom3",{"Frequency Score"}),
+				    #"Added Custom4" = Table.AddColumn(#"Removed Columns1", "Frequency Score", each if [Number_of_Orders] >= 30 then 3
+				else if [Number_of_Orders] >= 15 then 2
+				else 1),
+				    #"Added Custom5" = Table.AddColumn(#"Added Custom4", "Monetary Score", each if [Total_Spend] >= 30000 then 3
+				else if [Total_Spend] >= 15000 then 2
+				else 1),
+				    #"Added Custom6" = Table.AddColumn(#"Added Custom5", "RFM Score", each [Recency Score] & [Frequency Score] & [Monetary Score]),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom6",{{"RFM Score", Int64.Type}}),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Changed Type2",{"RFM Score"}),
+				    #"Added Custom7" = Table.AddColumn(#"Removed Columns2", "Custom", each [Recency Score] & [Frequency Score] & [Monetary Score]),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Added Custom7",{{"Custom", Int64.Type}}),
+				    #"Removed Columns3" = Table.RemoveColumns(#"Changed Type3",{"Custom"}),
+				    #"Added Custom8" = Table.AddColumn(#"Removed Columns3", "RFM", each Text.From([Recency Score]) & Text.From([Frequency Score]) & Text.From([Monetary Score])),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Custom8",{{"RFM", "RFM Score"}}),
+				    #"Split Column by Positions" = Table.SplitColumn(#"Renamed Columns", "RFM Score", Splitter.SplitTextByPositions({0, 1, 2}), {"RFM Score.1", "RFM Score.2", "RFM Score.3"}),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Split Column by Positions",{{"RFM Score.1", Int64.Type}, {"RFM Score.2", Int64.Type}, {"RFM Score.3", Int64.Type}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type4",{{"RFM Score.1", "R"}, {"RFM Score.2", "F"}, {"RFM Score.3", "M"}}),
+				    #"Added Custom9" = Table.AddColumn(#"Renamed Columns1", "RFM Category", each if [R] = 3 and [F] = 3 and [M] = 3 then "Best Customer"
+				else if [R] >= 2 and [F] >= 2 and [M] >= 2 then "Loyal Customer"
+				else if [R] = 3 then "Recent Buyer"
+				else if [M] = 3 then "High Spender"
+				else if [F] = 3 then "Frequent Buyer"
+				else if [R] = 1 and [F] = 1 and [M] = 1 then "Low Value"
+				else "At Risk"),
+				    #"Removed Columns4" = Table.RemoveColumns(#"Added Custom9",{"RFM Category"}),
+				    #"Added Custom10" = Table.AddColumn(#"Removed Columns4", "RFM Category", each if [R] = 3 and [F] = 3 and [M] = 3 then "Champions" 
+				else if [R] = 3 and [F] = 3 then "Loyal Customers"
+				else if [R] = 3 and [M] = 3 then "Recent High Spenders"
+				else if [F] = 3 and [M] = 3 then "Frequent High Spenders"
+				else if [R] = 1 and [F] = 1 and [M] = 1 then "Lost Customers"
+				else if [R] = 1 and [F] = 1 then "At Risk"
+				else if [F] = 1 and [M] = 1 then "Low Value"
+				else "Others")
+				in
+				    #"Added Custom10"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

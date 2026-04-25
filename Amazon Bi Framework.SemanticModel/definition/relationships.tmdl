@@ -1,0 +1,35 @@
+relationship 2c692429-1206-43a6-97b5-1f840cb58a9c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Expense_Tracking_Budget_Analysis.Month
+	toColumn: LocalDateTable_521a1d67-2a44-432c-acf6-fbe18e935550.Date
+
+relationship 318498cb-1a24-4c46-965b-9f772ab574cc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Market_Basket_Analysis_India.'Transaction Date'
+	toColumn: LocalDateTable_99469d06-fd18-4f3c-a897-0dbaa13b1569.Date
+
+relationship db4bedbf-de24-4844-bced-d6ef3327c0cd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: transaction_data.'Purchase Date'
+	toColumn: LocalDateTable_0c43d3ae-49c4-43d2-8648-09bdfa484046.Date
+
+relationship 640c5b13-1e51-4b96-bcc1-e775aefba99b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: customer_segmentation_dataset.'Last Purchase Date'
+	toColumn: LocalDateTable_1538cb1b-2821-4788-a2b7-8c797ecad4f0.Date
+
+relationship 322f4059-ae3a-4241-b187-e9547bc47ab6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: retail_price_optimization_dataset.'Date of Sale'
+	toColumn: LocalDateTable_5417c7a2-6fb4-4e14-b2ac-7f4378289fe2.Date
+
+relationship cadf6bfa-8736-4c9d-b549-18f4312bed13
+	joinOnDateBehavior: datePartOnly
+	fromColumn: employee_performance_analytics_dataset.Date
+	toColumn: LocalDateTable_c6adea2a-aa0e-4cdd-8b7d-5cae69b08cc7.Date
+
+relationship 9453d928-3e1d-4335-a5b2-a9da650d0a60
+	joinOnDateBehavior: datePartOnly
+	fromColumn: sales_forecasting_dataset.'Date of Sale'
+	toColumn: LocalDateTable_2704fb1f-58a5-42e0-ba4e-3cc7c3f9b9b8.Date
+

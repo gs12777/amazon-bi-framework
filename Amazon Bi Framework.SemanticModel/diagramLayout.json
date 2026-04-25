@@ -1,0 +1,138 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 136,
+            "y": 0
+          },
+          "nodeIndex": "Amazon_Customer_Insights",
+          "nodeLineageTag": "04fbda26-b80c-4c7d-adba-b737ca748142",
+          "size": {
+            "height": 626,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 408,
+            "y": 0
+          },
+          "nodeIndex": "Expense_Tracking_Budget_Analysis",
+          "nodeLineageTag": "eae49aa2-bca3-4762-befe-23fe9994a1ec",
+          "size": {
+            "height": 358,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 683,
+            "y": 0
+          },
+          "nodeIndex": "Market_Basket_Analysis_India",
+          "nodeLineageTag": "58efb145-70a5-433d-a569-4e796f69f1b7",
+          "size": {
+            "height": 445,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 962,
+            "y": 0
+          },
+          "nodeIndex": "transaction_data",
+          "nodeLineageTag": "d77ec264-552e-46e5-a70d-1dd4691d0343",
+          "size": {
+            "height": 553,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 1110,
+            "y": 163
+          },
+          "nodeIndex": "customer_segmentation_dataset",
+          "nodeLineageTag": "f94d3ee1-5dea-4993-a771-06b9e75eea65",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1258,
+            "y": 163
+          },
+          "nodeIndex": "retail_price_optimization_dataset",
+          "nodeLineageTag": "6dfab051-2193-4420-9c96-81021d510a00",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1406,
+            "y": 163
+          },
+          "nodeIndex": "employee_performance_analytics_dataset",
+          "nodeLineageTag": "97bf87a0-48c0-444b-a01f-49443f87b0fb",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1554,
+            "y": 213
+          },
+          "nodeIndex": "TicketStatusSummary",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1702,
+            "y": 163
+          },
+          "nodeIndex": "sales_forecasting_dataset",
+          "nodeLineageTag": "ab53ada4-f42f-4b33-9c18-b39b630312ec",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 70,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

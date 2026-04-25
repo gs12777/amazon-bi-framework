@@ -1,0 +1,156 @@
+table employee_performance_analytics_dataset
+	lineageTag: 97bf87a0-48c0-444b-a01f-49443f87b0fb
+
+	column 'Employee ID'
+		dataType: string
+		lineageTag: 8e7ccaed-6a41-4f40-8808-c4018b580332
+		summarizeBy: none
+		sourceColumn: Employee ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employee Name'
+		dataType: string
+		lineageTag: bc27b3d4-c6e1-4c59-8130-3b41b20626b0
+		summarizeBy: none
+		sourceColumn: Employee Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		lineageTag: 99e42a4e-e67f-4908-8a3a-bc1d5db3ed2e
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Seller Rating (1–5)'
+		dataType: double
+		lineageTag: 02508243-0b86-4c82-9f43-ecd7890bb671
+		summarizeBy: sum
+		sourceColumn: Seller Rating (1–5)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Avg Response Time (mins)'
+		dataType: double
+		lineageTag: 638fda0d-f484-4310-ad97-716759f72343
+		summarizeBy: sum
+		sourceColumn: Avg Response Time (mins)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Resolved Tickets'
+		dataType: int64
+		formatString: 0
+		lineageTag: 75014a59-8257-4cb1-bef0-9ee706306889
+		summarizeBy: sum
+		sourceColumn: Resolved Tickets
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unresolved Tickets'
+		dataType: int64
+		formatString: 0
+		lineageTag: 829922dc-0c16-4bcd-a60a-250828833d26
+		summarizeBy: sum
+		sourceColumn: Unresolved Tickets
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Satisfaction Score (1–10)'
+		dataType: double
+		lineageTag: bc1fc878-0407-4e5e-a39d-d75779177747
+		summarizeBy: sum
+		sourceColumn: Customer Satisfaction Score (1–10)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Shift
+		dataType: string
+		lineageTag: d14644d4-b372-47ae-8b28-edad4c57322c
+		summarizeBy: none
+		sourceColumn: Shift
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Attendance %'
+		dataType: double
+		lineageTag: 1d4b5d31-a9b8-45ef-bc00-0f59f4f47c26
+		summarizeBy: sum
+		sourceColumn: Attendance %
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Sales Closed'
+		dataType: int64
+		formatString: 0
+		lineageTag: 97394ab4-5162-4901-8d2a-433f895048e3
+		summarizeBy: sum
+		sourceColumn: Sales Closed
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Target Achievement %'
+		dataType: double
+		lineageTag: 9b3a93ae-afc7-40d6-91e6-2118423e21fd
+		summarizeBy: sum
+		sourceColumn: Target Achievement %
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0b95d00c-0327-46d7-81a4-66b59bffa984
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: cadf6bfa-8736-4c9d-b549-18f4312bed13
+			defaultHierarchy: LocalDateTable_c6adea2a-aa0e-4cdd-8b7d-5cae69b08cc7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column MonthName = FORMAT('employee_performance_analytics_dataset'[Date], "MMMM")
+		lineageTag: f0b17e8f-090c-4fd0-be0b-f4f0ca4d2b6f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber = ```
+			MONTH('employee_performance_analytics_dataset'[Date])
+			
+			```
+		formatString: 0
+		lineageTag: 4832e23a-b4b8-493b-a115-491eaf762504
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition employee_performance_analytics_dataset = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\gurus\Downloads\employee_performance_analytics_dataset.csv"),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Employee ID", type text}, {"Employee Name", type text}, {"Department", type text}, {"Seller Rating (1–5)", type number}, {"Avg Response Time (mins)", type number}, {"Resolved Tickets", Int64.Type}, {"Unresolved Tickets", Int64.Type}, {"Customer Satisfaction Score (1–10)", type number}, {"Shift", type text}, {"Attendance %", type number}, {"Sales Closed", Int64.Type}, {"Target Achievement %", type number}, {"Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

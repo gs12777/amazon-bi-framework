@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Amazon Bi Framework"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f34d6289-3940-4b3c-8142-a442646b625b"
+  }
+}

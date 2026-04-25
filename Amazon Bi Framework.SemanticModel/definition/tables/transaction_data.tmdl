@@ -1,0 +1,182 @@
+table transaction_data
+	lineageTag: d77ec264-552e-46e5-a70d-1dd4691d0343
+
+	measure 'Repeat Customer Rate' = ```
+			
+			VAR RepeatCustomers = 
+			    CALCULATETABLE(
+			        VALUES(transaction_data[Customer Name]),
+			        FILTER(
+			            ADDCOLUMNS(
+			                VALUES(transaction_data[Customer Name]),
+			                "OrderCount", COUNTROWS(FILTER(transaction_data, transaction_data[Customer Name] = EARLIER(transaction_data[Customer Name])))
+			            ),
+			            [OrderCount] > 1
+			        )
+			    )
+			VAR TotalCustomers = DISTINCTCOUNT(transaction_data[Customer Name])
+			RETURN
+			    DIVIDE(COUNTROWS(RepeatCustomers), TotalCustomers, 0)
+			```
+		lineageTag: dbb45dac-0e04-4699-80dc-9c875113da9b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Products Sold' = ```
+			
+			SUM(transaction_data[Quantity Sold])
+			
+			```
+		formatString: 0
+		lineageTag: c9bb3032-07d0-4a0d-8d68-8e0efd91aff0
+
+	measure 'Unique Products Sold' =
+			
+			DISTINCTCOUNT(transaction_data[Product])
+		formatString: 0
+		lineageTag: 94cdfdd3-59f5-40f9-8ca7-15c21064163f
+
+	column 'Transaction ID'
+		dataType: string
+		lineageTag: 2e4d8b43-b746-49e0-9349-d865cd35eef0
+		summarizeBy: none
+		sourceColumn: Transaction ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer ID'
+		dataType: string
+		lineageTag: da2a5bd7-0dcc-4b6b-9e31-fc3617fdcf37
+		summarizeBy: none
+		sourceColumn: Customer ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Name'
+		dataType: string
+		lineageTag: 39e4877c-5aeb-4139-aec0-6da2365ba080
+		summarizeBy: none
+		sourceColumn: Customer Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 89f54cb3-47b1-47b0-86d6-f1168b0602de
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column Age
+		dataType: int64
+		formatString: 0
+		lineageTag: af92ea2b-0424-49fa-b0fc-6d9e958ac5d8
+		summarizeBy: sum
+		sourceColumn: Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: d2493dd9-dadd-426f-9217-306e7c11ee6b
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Purchase Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 57119643-384d-4812-9ab2-d57be2b67d66
+		summarizeBy: none
+		sourceColumn: Purchase Date
+
+		variation Variation
+			isDefault
+			relationship: db4bedbf-de24-4844-bced-d6ef3327c0cd
+			defaultHierarchy: LocalDateTable_0c43d3ae-49c4-43d2-8648-09bdfa484046.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Product
+		dataType: string
+		lineageTag: 2df0c90d-f2ed-429b-9f4b-c5ca8fe4b967
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Category'
+		dataType: string
+		lineageTag: b06551f6-1bfb-4940-882b-02bdd35fe0d5
+		summarizeBy: none
+		sourceColumn: Product Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Quantity Sold'
+		dataType: int64
+		formatString: 0
+		lineageTag: 4aa5a2e3-bb34-402d-96a5-6f8fd374ee9b
+		summarizeBy: sum
+		sourceColumn: Quantity Sold
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Selling Price (INR)'
+		dataType: int64
+		formatString: 0
+		lineageTag: a27e42c7-3c76-457d-b02a-8313be6f2acf
+		summarizeBy: sum
+		sourceColumn: Selling Price (INR)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Amount (INR)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 85276926-4f39-411a-b53a-d57e920e3e9b
+		summarizeBy: sum
+		sourceColumn: Total Amount (INR)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Payment Method'
+		dataType: string
+		lineageTag: 7022d870-7779-4bac-9f59-0e2dac110ec9
+		summarizeBy: none
+		sourceColumn: Payment Method
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Returned'
+		dataType: string
+		lineageTag: e4c6cc28-2557-4814-aa3b-748a2fcda821
+		summarizeBy: none
+		sourceColumn: Is Returned
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Delivery Status'
+		dataType: string
+		lineageTag: 367125f0-c79d-4123-9913-11727e5320e7
+		summarizeBy: none
+		sourceColumn: Delivery Status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition transaction_data = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\gurus\Downloads\New folder (6)\New folder (4)\transaction_data.csv"),[Delimiter=",", Columns=15, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Transaction ID", type text}, {"Customer ID", type text}, {"Customer Name", type text}, {"Gender", type text}, {"Age", Int64.Type}, {"Location", type text}, {"Purchase Date", type date}, {"Product", type text}, {"Product Category", type text}, {"Quantity Sold", Int64.Type}, {"Selling Price (INR)", Int64.Type}, {"Total Amount (INR)", Int64.Type}, {"Payment Method", type text}, {"Is Returned", type text}, {"Delivery Status", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
