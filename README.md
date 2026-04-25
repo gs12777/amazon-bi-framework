@@ -133,21 +133,21 @@ This strengthened both usability and stakeholder engagement.
 ![Dashboard Preview 1](images/HomePage.png)
 
 <p align="center">
-  <img src="images/dashboard1.png" width="45%" />
-  <img src="images/dashboard2.png" width="45%" />
+  <img src="images/Dashboard1.png" width="45%" />
+  <img src="images/Dashboard2.png" width="45%" />
 </p>
 
 <p align="center">
-  <img src="images/dashboard3.png" width="45%" />
-  <img src="images/dashboard4.png" width="45%" />
+  <img src="images/Dashboard3.png" width="45%" />
+  <img src="images/Dashboard4.png" width="45%" />
 </p>
 
 <p align="center">
-  <img src="images/dashboard5.png" width="45%" />
-  <img src="images/dashboard6.png" width="45%" />
+  <img src="images/Dashboard5.png" width="45%" />
+  <img src="images/Dashboard6.png" width="45%" />
 </p>
 
 <p align="center">
-  <img src="images/dashboard7.png" width="45%" />
-  <img src="images/dashboard8.png" width="45%" />
+  <img src="images/Dashboard7.png" width="45%" />
+  <img src="images/Dashboard8.png" width="45%" />
 </p>
